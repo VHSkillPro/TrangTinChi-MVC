@@ -14,8 +14,8 @@
 #   2.2 Detail -- OK
 #   2.3 Edit -- OK
 #   2.4 Remove -- OK
-#   2.5 Add
-#   2.6 Sort
+#   2.5 Add -- OK
+#   2.6 Sort -- OK
 #   2.7 Search
 #   2.8 Add Student
 #   2.9 Remove Student

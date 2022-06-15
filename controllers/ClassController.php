@@ -9,17 +9,7 @@ class ClassController{
         $order = isset($_GET['order']) ? $_GET['order'] : 'id';
         $desc = isset($_GET['desc']) ? true : false;
 
-        // $formRowTitles = [
-        //     "name" => "Họ và tên",
-        //     "gender" => "Giới tính",
-        //     "birthday" => "Ngày sinh",
-        //     "birthplace" => "Nơi sinh",
-        //     "phone" => "Số điện thoại",
-        //     "email" => "Email", 
-        //     "major" => "Ngành học"
-        // ];
-
-        $list_class = ClassModel::get_list();
+        $list_class = ClassModel::get_list_order_by($order, $desc);
 
         require_once './views/class/class-list.php';
     }
