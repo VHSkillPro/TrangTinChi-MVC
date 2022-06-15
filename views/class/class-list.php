@@ -7,6 +7,75 @@
 </style>
 
 <div class="container mt-3">
+    <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#modelAddClass">
+        <i class="fa-solid fa-plus"></i>
+        Thêm lớp
+    </button>
+
+    <div class="modal fade" id="modelAddClass" tabindex="-1" role="dialog" aria-labelledby="modelAddClass" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 650px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm lớp</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?= "/class/add" ?>" method="POST">
+                        <div class="form-group row">
+                            <label for="class-name" class="col-3 col-form-label text-center">Tên lớp</label>
+                            <div class="col-9">
+                                <input type="text" name="class-name" class="form-control" id="class-name" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="class-credit" class="col-3 col-form-label text-center">Số tín chỉ</label>
+                            <div class="col-9">
+                                <input type="number" name="class-credit" class="form-control" id="class-credit" require>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="class-min_student" class="col-3 col-form-label text-center">Số SV tối thiểu</label>
+                            <div class="col-9">
+                                <input type="number" name="class-min_student" class="form-control" id="class-min_student" require>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="class-max_student" class="col-3 col-form-label text-center">Số SV tối đa</label>
+                            <div class="col-9">
+                                <input type="number" name="class-max_student" class="form-control" id="class-max_student" require>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="class-time_start" class="col-3 col-form-label text-center">Ngày bắt đầu học</label>
+                            <div class="col-9">
+                                <input type="date" name="class-time_start" class="form-control" id="class-time_start" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="class-time_open" class="col-3 col-form-label text-center">Ngày mở lớp</label>
+                            <div class="col-9">
+                                <input type="date" name="class-time_open" class="form-control" id="class-time_open" required>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button 
+                                type="submit" 
+                                class="btn btn-primary" 
+                                name="btn-add-class" 
+                                onclick="return confirm('Bạn có muốn thêm ?');"
+                            >
+                                Thêm lớp
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table table-striped mt-3">
         <thead>
             <tr>

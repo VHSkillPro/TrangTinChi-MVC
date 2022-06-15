@@ -78,4 +78,19 @@ class ClassController{
             require_once './views/404.php';
         }
     }
+
+    static function add(){
+        if (isset($_POST['btn-add-class'])){
+            $class = (new ClassObj)
+                ->set_name($_POST['class-name'])
+                ->set_credit($_POST['class-credit'])
+                ->set_min_student($_POST['class-min_student'])
+                ->set_max_student($_POST['class-max_student'])
+                ->set_time_start($_POST['class-time_start'])
+                ->set_time_open($_POST['class-time_open']);
+
+            ClassModel::add_class($class);
+            header("location: /class");
+        }
+    }
 };

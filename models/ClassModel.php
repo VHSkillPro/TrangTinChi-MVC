@@ -118,4 +118,15 @@ class ClassModel{
                 where id = ' . $id;
         return DB::query($sql);
     }
+
+    static function add_class($class){
+        $sql = 'insert into classes (name, credit, min_student, max_student, time_start, time_open)
+                value ( "' . $class->name . '", 
+                    ' . $class->credit . ', 
+                    ' . $class->min_student . ', 
+                    ' . $class->max_student . ',
+                    "' . $class->time_start . '",
+                    "' . $class->time_open . '")';
+        return DB::query($sql);
+    }
 };

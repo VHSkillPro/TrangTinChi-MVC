@@ -15,4 +15,5 @@ App::route('home', 'index', 'GET', 'HomeController::index');
     App::route('class', 'detail', 'GET', 'ClassController::detail');
     App::route('class', 'edit', 'POST', 'ClassController::edit');
     App::route('class', 'remove', 'POST', 'ClassController::remove');
+    App::route('class', 'add', 'POST', 'ClassController::add');
     
