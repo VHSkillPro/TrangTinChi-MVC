@@ -1,22 +1,113 @@
 <?php
 
+class ClassObj{
+    private int $id;
+    private string $name;
+    private int $credit;
+    private int $min_student;
+    private int $max_student;
+    private string $time_start;
+    private string $time_open;
+
+    // SET
+    function set_id($id){
+        $this->id = $id;
+        return $this;
+    }
+
+    function set_name($name){
+        $this->name = $name;
+        return $this;
+    }
+
+    function set_credit($credit){
+        $this->credit = $credit;
+        return $this;
+    }
+
+    function set_min_student($min_student){
+        $this->min_student = $min_student;
+        return $this;
+    }
+
+    function set_max_student($max_student){
+        $this->max_student = $max_student;
+        return $this;
+    }
+
+    function set_time_start($time_start){
+        $this->time_start = $time_start;
+        return $this;
+    }
+
+    function set_time_open($time_open){
+        $this->time_open = $time_open;
+        return $this;
+    }
+
+    // GET
+    function __get($name){
+        switch ($name){
+            case 'id':
+                return $this->id;
+            case 'name':
+                return $this->name;
+            case 'credit':
+                return $this->credit;
+            case 'min_student':
+                return $this->min_student;
+            case 'max_student':
+                return $this->max_student;
+            case 'time_start':
+                return $this->time_start;
+            case 'time_open':
+                return $this->time_open;
+        }
+    }
+};
+
 class ClassModel{
     static function get_list(){
         $sql = "select * from classes";
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
-        return $ls;
+        $list_class = [];
+        foreach ($ls as $item){
+            $list_class[] = (new ClassObj)
+                ->set_id($item['id'])
+                ->set_name($item['name'])
+                ->set_credit($item['credit'])
+                ->set_min_student($item['min_student'])
+                ->set_max_student($item['max_student'])
+                ->set_time_start($item['time_start'])
+                ->set_time_open($item['time_open']);
+        }
+        return $list_class;
     }
 
     static function get_class_by_id($id){
         $sql = "select * from classes where id = " . $id;
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
-        return count($ls) == 1 ? $ls[0] : null;
+        if (count($ls) == 1){
+            return (new ClassObj)
+                ->set_id($ls[0]['id'])
+                ->set_name($ls[0]['name'])
+                ->set_credit($ls[0]['credit'])
+                ->set_min_student($ls[0]['min_student'])
+                ->set_max_student($ls[0]['max_student'])
+                ->set_time_start($ls[0]['time_start'])
+                ->set_time_open($ls[0]['time_open']);
+        }
+        else return null;
     }
 
     static function remove_class($id){
         $sql = "delete from classes where id = " . $id;
         return DB::query($sql);
+    }
+
+    static function edit_class($id, $class){
+        
     }
 };

@@ -8,24 +8,6 @@ class StudentController{
         $order = isset($_GET['order']) ? $_GET['order'] : 'id';
         $desc = isset($_GET['desc']) ? true : false;
 
-        $title = [
-            "id" => "Mã sinh viên", 
-            "name" => "Họ và tên",
-            "gender" => "Giới tính",
-            "birthday" => "Ngày sinh",
-            "major" => "Ngành học"
-        ];
-
-        $formRowTitles = [
-            "name" => "Họ và tên",
-            "gender" => "Giới tính",
-            "birthday" => "Ngày sinh",
-            "birthplace" => "Nơi sinh",
-            "phone" => "Số điện thoại",
-            "email" => "Email", 
-            "major" => "Ngành học"
-        ];
-
         $list_student = StudentModel::get_list_order_by($order, $desc);
         require_once './views/student/student-list.php';
     }
@@ -47,17 +29,6 @@ class StudentController{
             die();
         }
 
-        $title = [
-            "id" => "Mã sinh viên", 
-            "name" => "Họ và tên",
-            "gender" => "Giới tính",
-            "birthday" => "Ngày sinh",
-            "birthplace" => "Nơi sinh",
-            "phone" => "Số điện thoại",
-            "email" => "Email", 
-            "major" => "Ngành học"
-        ];
-
         require_once './views/student/student-detail.php';
     }
 
@@ -72,8 +43,17 @@ class StudentController{
 
     static function edit(){
         if (isset($_POST['btn-edit-student'])){
-            $id = (int)$_POST['id'];
-            StudentModel::edit_student($id, $_POST);
+            $id = (int)$_POST['student-id'];
+            $student = (new Student)
+                ->set_name($_POST['student-name'])
+                ->set_gender($_POST['student-gender'])
+                ->set_major($_POST['student-major'])
+                ->set_birthday($_POST['student-birthday'])
+                ->set_birthplace($_POST['student-birthplace'])
+                ->set_phone($_POST['student-phone'])
+                ->set_email($_POST['student-email']);
+
+            StudentModel::edit_student($id, $student);
             header("location: /student/detail?id=" . $id);
         }
         else {
@@ -83,15 +63,16 @@ class StudentController{
 
     static function add(){
         if (isset($_POST['btn-add-student'])) {
-            $student['name'] = $_POST['name'];
-            $student['gender'] = $_POST['gender'];
-            $student['birthday'] = $_POST['birthday'];
-            $student['birthplace'] = $_POST['birthplace'];
-            $student['phone'] = $_POST['phone'];
-            $student['email'] = $_POST['email'];
-            $student['major'] = $_POST['major'];
+            $student = (new Student)
+                ->set_name($_POST['student-name'])
+                ->set_gender($_POST['student-gender'])
+                ->set_major($_POST['student-major'])
+                ->set_birthday($_POST['student-birthday'])
+                ->set_birthplace($_POST['student-birthplace'])
+                ->set_phone($_POST['student-phone'])
+                ->set_email($_POST['student-email']);
 
-            if (!filter_var($student['email'], FILTER_VALIDATE_EMAIL)){
+            if (!filter_var($student->email, FILTER_VALIDATE_EMAIL)){
                 setcookie("error", "Email không hợp lệ", time() + 1);
                 die(header("location: /student"));
             }

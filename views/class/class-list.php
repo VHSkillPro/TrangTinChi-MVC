@@ -11,15 +11,27 @@
         <thead>
             <tr>
                 <th scope="col" style="vertical-align: middle;">STT</th>
-                <?php foreach ($title as $key => $value) { ?>
                 <th scope="col">
-                    <?=$value?>
+                    Mã lớp
                     <span class="d-inline-flex flex-column">
-                        <a href="<?= "/class/index?order=$key&page=$page" ?>"><i class="fa-solid fa-angle-up"></i></a>
-                        <a href="<?= "/class/index?order=$key&page=$page&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
+                        <a href="<?= "/class/index?page=$page&order=id" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/index?page=$page&order=id&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
                     </span>
                 </th>
-                <?php } ?>
+                <th scope="col">
+                    Tên lớp
+                    <span class="d-inline-flex flex-column">
+                        <a href="<?= "/class/index?page=$page&order=name" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/index?page=$page&order=name&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
+                    </span>
+                </th>
+                <th scope="col">
+                    Số tín chỉ
+                    <span class="d-inline-flex flex-column">
+                        <a href="<?= "/class/index?page=$page&order=credit" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/index?page=$page&order=credit&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
+                    </span>
+                </th>
                 <th scope="col" style="vertical-align: middle;">Hành động</th>
             </tr>
         </thead>
@@ -28,16 +40,19 @@
                 $class = $list_class[$i]; ?>
             <tr>
                 <td><?= $i + 1 ?></td>
-                <?php foreach ($title as $key => $value) { ?>
-                    <td><?= $class[$key] ?></td>
-                <?php } ?>
+                <td><?= $class->id ?></td>
+                <td><?= $class->name ?></td>
+                <td><?= $class->credit ?></td>
                 <td>
-                    <a class="btn btn-primary" href=<?= "/class/detail?id=$class[id]" ?> role="button">
-                        <i class="fa-solid fa-circle-info"></i>
-                    </a>
+                    <a class="btn btn-primary" href=<?= "/class/detail?id=".$class->id ?> role="button"><i class="fa-solid fa-circle-info"></i></a>
                     <form class="d-inline" action=<?= "/class/remove" ?> method="POST">
-                        <input type="hidden" name="class-id" value=<?= $class['id'] ?>>
-                        <button type="submit" name="btn-remove-class" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xoá ?');">
+                        <input type="hidden" name="class-id" value=<?= $class->id ?>>
+                        <button 
+                            type="submit" 
+                            name="btn-remove-class" 
+                            class="btn btn-danger" 
+                            onclick="return confirm('Bạn có chắc chắn muốn xoá ?');"
+                        >
                             <i class="fa-solid fa-circle-minus"></i>
                         </button>
                     </form>

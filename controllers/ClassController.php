@@ -9,12 +9,6 @@ class ClassController{
         $order = isset($_GET['order']) ? $_GET['order'] : 'id';
         $desc = isset($_GET['desc']) ? true : false;
 
-        $title = [
-            "id" => "Mã lớp", 
-            "name" => "Tên lớp",
-            "credit" => "Số tín chỉ"
-        ];
-
         // $formRowTitles = [
         //     "name" => "Họ và tên",
         //     "gender" => "Giới tính",
@@ -40,64 +34,35 @@ class ClassController{
     }
 
     static function detail(){
+        // nếu không có id 
         if (!isset($_GET['id'])) {
             require_once './views/404.php';
             die();
         }
 
+        // lấy class có mã lớp = id 
         $id = (int)$_GET['id'];
         $class = ClassModel::get_class_by_id($id);
 
+        // nếu không có class 
         if (is_null($class)){
             require_once './views/404.php';
             die();
         }
 
-        $formRow = [
-            "id" => [
-                "label" => "Mã lớp",
-                "type" => "text",
-                "readonly" => true
-            ],
-            "name" => [
-                "label" => "Tên lớp",
-                "type" => "text"
-            ],
-            "credit" => [
-                "label" => "Số tín chỉ",
-                "type" => "number"
-            ],
-            "min_students" => [
-                "label" => "Số SV tối thiểu",
-                "type" => "number"
-            ],
-            "max_students" => [
-                "label" => "Số SV tối đa",
-                "type" => "number"
-            ],
-            "time_start" => [
-                "label" => "Ngày bắt đầu học",
-                "type" => "date"
-            ],
-            "time_open" => [
-                "label" => "Ngày mở lớp",
-                "type" => "date"
-            ]
-        ];
-
+        // get params
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $order = isset($_GET['order']) ? $_GET['order'] : 'id';
         $desc = isset($_GET['desc']) ? true : false;
-        $title = [
-            "id" => "Mã sinh viên", 
-            "name" => "Họ và tên",
-            "gender" => "Giới tính",
-            "birthday" => "Ngày sinh",
-            "major" => "Ngành học"
-        ];
-
+        
         $list_student_in_class = StudentModel::get_student_by_class_id($id);
 
         require_once './views/class/class-detail.php';
+    }
+
+    static function edit(){
+        if (isset($_POST['btn-edit-class'])){
+            $id = (int)$_POST['id'];
+        }
     }
 };

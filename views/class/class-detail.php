@@ -9,31 +9,52 @@
 <div class="container mt-5">
     <h1>Thông tin chi tiết</h1>
     <form action="<?= "/class/edit" ?>" method="POST" class="mt-5">
-
-        <?php foreach ($formRow as $key => $value) { ?>
         <div class="form-group row">
-            <label 
-                for="<?= $key ?>" 
-                class="col-2 col-form-label text-center"
-            >
-                <?= $value['label'] ?>
-            </label>
+            <label for="class-id" class="col-2 col-form-label text-center">Mã lớp</label>
             <div class="col-10">
-                <input 
-                    type="<?= $value['type'] ?>" 
-                    name="<?= $key ?>" 
-                    <?= isset($value['readonly']) ? "readonly" : "" ?> 
-                    class="form-control" 
-                    id="<?= $key ?>" 
-                    value="<?= $class[$key] ?>"
-                >
+                <input type="text" name="class-id" id="class-id" class="form-control" value="<?= $class->id ?>" readonly>
             </div>
         </div>
-        <?php } ?>
+        <div class="form-group row">
+            <label for="class-name" class="col-2 col-form-label text-center">Tên lớp</label>
+            <div class="col-10">
+                <input type="text" name="class-name" id="class-name" class="form-control" value="<?= $class->name ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="class-credit" class="col-2 col-form-label text-center">Số tín chỉ</label>
+            <div class="col-10">
+                <input type="number" name="class-credit" id="class-credit" class="form-control" value="<?= $class->credit ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="class-min_student" class="col-2 col-form-label text-center">Số SV tối thiểu</label>
+            <div class="col-10">
+                <input type="number" name="class-min_student" id="class-min_student" class="form-control" value="<?= $class->min_student ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="class-max_student" class="col-2 col-form-label text-center">Số SV tối đa</label>
+            <div class="col-10">
+                <input type="number" name="class-max_student" id="class-max_student" class="form-control" value="<?= $class->max_student ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="class-time_start" class="col-2 col-form-label text-center">Ngày bắt đầu học</label>
+            <div class="col-10">
+                <input type="date" name="class-time_start" id="class-time_start" class="form-control" value="<?= $class->time_start ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="class-time_open" class="col-2 col-form-label text-center">Ngày mở lớp</label>
+            <div class="col-10">
+                <input type="date" name="class-time_open" id="class-time_open" class="form-control" value="<?= $class->time_open ?>">
+            </div>
+        </div>
 
         <div class="form-group row">
             <label class="col-2 col-form-label text-center">Trạng thái</label>
-            <?php if (count($list_student_in_class) < $class['min_students']) { ?>
+            <?php if (count($list_student_in_class) < $class->min_student) { ?>
                 <h5 class="col-10 text-danger">Thiếu sinh viên</h5>
             <?php } else { ?>
                 <h5 class="col-10 text-success">Có thể mở lớp</h5>
@@ -58,19 +79,41 @@
         <thead>
             <tr>
                 <th scope="col" style="vertical-align: middle;">STT</th>
-                <?php foreach ($title as $key => $value) { ?>
                 <th scope="col">
-                    <?=$value?>
+                    Mã sinh viên
                     <span class="d-inline-flex flex-column">
-                        <a href="<?= "/class/detail?id=$id&order=$key&page=$page" ?>">
-                            <i class="fa-solid fa-angle-up"></i>
-                        </a>
-                        <a href="<?= "/class/detail?id=$id&order=$key&page=$page&desc" ?>">
-                            <i class="fa-solid fa-angle-down"></i>
-                        </a>
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=id" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=id&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
                     </span>
                 </th>
-                <?php } ?>
+                <th scope="col">
+                    Họ và tên
+                    <span class="d-inline-flex flex-column">
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=name" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=name&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
+                    </span>
+                </th>
+                <th scope="col">
+                    Giới tính
+                    <span class="d-inline-flex flex-column">
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=gender" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=gender&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
+                    </span>
+                </th>
+                <th scope="col">
+                    Ngày sinh
+                    <span class="d-inline-flex flex-column">
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=birthday" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=birthday&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
+                    </span>
+                </th>
+                <th scope="col">
+                    Ngành học
+                    <span class="d-inline-flex flex-column">
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=major" ?>"><i class="fa-solid fa-angle-up"></i></a>
+                        <a href="<?= "/class/detail?id=$id&page=$page&order=major&desc" ?>"><i class="fa-solid fa-angle-down"></i></a>
+                    </span>
+                </th>
                 <th scope="col" style="vertical-align: middle;">Hành động</th>
             </tr>
         </thead>
@@ -79,15 +122,17 @@
                 $student = $list_student_in_class[$i]; ?>
             <tr>
                 <td><?= $i + 1 ?></td>
-                <?php foreach ($title as $key => $value) { ?>
-                    <td><?= $student[$key] ?></td>
-                <?php } ?>
+                <td><?= $student->id ?></td>
+                <td><?= $student->name ?></td>
+                <td><?= $student->gender ?></td>
+                <td><?= $student->birthday ?></td>
+                <td><?= $student->major ?></td>
                 <td>
-                    <a class="btn btn-primary" href=<?= "/student/detail?id=$student[id]" ?> role="button">
+                    <a class="btn btn-primary" href=<?= "/student/detail?id=".$student->id ?> role="button">
                         <i class="fa-solid fa-circle-info"></i>
                     </a>
                     <form class="d-inline" action=<?= "/class/remove-student" ?> method="POST">
-                        <input type="hidden" name="class-id" value=<?= $student['id'] ?>>
+                        <input type="hidden" name="class-id" value=<?= $student->id ?>>
                         <button 
                             type="submit" 
                             name="btn-remove-student" 
