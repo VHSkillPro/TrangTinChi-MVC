@@ -108,6 +108,14 @@ class ClassModel{
     }
 
     static function edit_class($id, $class){
-        
+        $sql = 'update classes 
+                set name = "' . $class->name . '",
+                    credit = ' . $class->credit . ',
+                    min_student = ' . $class->min_student . ',
+                    max_student = ' . $class->max_student . ',
+                    time_start = "' . $class->time_start . '",
+                    time_open = "' . $class->time_open . '"
+                where id = ' . $id;
+        return DB::query($sql);
     }
 };

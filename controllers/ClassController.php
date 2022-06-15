@@ -62,7 +62,20 @@ class ClassController{
 
     static function edit(){
         if (isset($_POST['btn-edit-class'])){
-            $id = (int)$_POST['id'];
+            $id = (int)$_POST['class-id'];
+            $class = (new ClassObj)
+                ->set_name($_POST['class-name'])
+                ->set_credit($_POST['class-credit'])
+                ->set_min_student($_POST['class-min_student'])
+                ->set_max_student($_POST['class-max_student'])
+                ->set_time_start($_POST['class-time_start'])
+                ->set_time_open($_POST['class-time_open']);
+
+            ClassModel::edit_class($id, $class);
+            header("location: /class/detail?id=" . $id);
+        }
+        else {
+            require_once './views/404.php';
         }
     }
 };

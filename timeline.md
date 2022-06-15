@@ -12,7 +12,7 @@
 # 2. Class
 #   2.1 List -- OK
 #   2.2 Detail -- OK
-#   2.3 Edit
+#   2.3 Edit -- OK
 #   2.4 Remove -- OK
 #   2.5 Add
 #   2.6 Sort
