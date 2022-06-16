@@ -6,8 +6,8 @@
 #   1.5 Add -- OK
 #   1.6 Sort -- OK
 #   1.7 Search
-#   1.8 Add Class
-#   1.9 Remove Class
+#   1.8 Add Class -- OK
+#   1.9 Remove Class -- OK
 
 # 2. Class
 #   2.1 List -- OK

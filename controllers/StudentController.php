@@ -1,5 +1,6 @@
 <?php
 require_once './models/StudentModel.php';
+require_once './models/ClassModel.php';
 
 class StudentController{
     static function index(){
@@ -79,6 +80,72 @@ class StudentController{
 
             StudentModel::add_student($student);
             die(header("location: /student"));
+        }
+    }
+
+    static function class(){
+        if (!isset($_GET['id'])){
+            die(require_once './views/404.php');
+        }
+
+        $id = (int)$_GET['id'];
+        $student = StudentModel::get_student_by_id($id);
+        $list_class_registed = ClassModel::get_classes_by_student_id($id);
+
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $order = isset($_GET['order']) ? $_GET['order'] : 'id';
+        $desc = isset($_GET['desc']) ? true : false;
+
+        if ($order !== "direc"){
+            $list_class = ClassModel::get_list_order_by($order, $desc);
+        }
+        else {
+            $list = ClassModel::get_list();
+            $list_class_first = [];
+            $list_class_second = [];
+            foreach ($list as $class){
+                if (in_array($class, $list_class_registed)){
+                    $list_class_first[] = $class;
+                }
+                else {
+                    $list_class_second[] = $class;
+                }
+            }
+
+            if (!$desc){
+                $list_class = array_merge($list_class_first, $list_class_second);
+            }
+            else {
+                $list_class = array_merge($list_class_second, $list_class_first);
+            }
+        }
+        
+        require_once './views/student/student-add-class.php';
+    }
+
+    static function remove_class(){
+        if (isset($_POST['btn-remove-class'])){
+            $class_id = $_POST['class-id'];
+            $student_id = $_POST['student-id'];
+
+            StudentModel::remove_class($student_id, $class_id);
+            die(header("location: /student/class?id=" . $student_id));
+        }
+        else {
+            die(require_once './views/404.php');
+        }
+    }
+
+    static function add_class(){
+        if (isset($_POST['btn-add-class'])){
+            $class_id = $_POST['class-id'];
+            $student_id = $_POST['student-id'];
+
+            StudentModel::add_class($student_id, $class_id);
+            die(header("location: /student/class?id=" . $student_id));
+        }
+        else {
+            die(require_once './views/404.php');
         }
     }
 };

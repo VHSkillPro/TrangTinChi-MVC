@@ -142,7 +142,7 @@
                 <td><?= $student->birthday ?></td>
                 <td><?= $student->major ?></td>
                 <td>
-                    <a class="btn btn-info" href="#" role="button">
+                    <a class="btn btn-info" href=<?="/student/class?id=$student->id" ?> role="button">
                         <i class="fa-solid fa-calendar-plus"></i>
                     </a>
                     <a class="btn btn-primary" href=<?= "/student/detail?id=$student->id" ?> role="button">

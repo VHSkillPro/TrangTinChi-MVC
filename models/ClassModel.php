@@ -64,6 +64,21 @@ class ClassObj{
                 return $this->time_open;
         }
     }
+
+    static function get_list_classes_obj($arr){
+        $list_class = [];
+        foreach ($arr as $item){
+            $list_class[] = (new ClassObj)
+                ->set_id($item['id'])
+                ->set_name($item['name'])
+                ->set_credit($item['credit'])
+                ->set_min_student($item['min_student'])
+                ->set_max_student($item['max_student'])
+                ->set_time_start($item['time_start'])
+                ->set_time_open($item['time_open']);
+        }
+        return $list_class;
+    }
 };
 
 class ClassModel{
@@ -71,18 +86,7 @@ class ClassModel{
         $sql = "select * from classes";
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
-        $list_class = [];
-        foreach ($ls as $item){
-            $list_class[] = (new ClassObj)
-                ->set_id($item['id'])
-                ->set_name($item['name'])
-                ->set_credit($item['credit'])
-                ->set_min_student($item['min_student'])
-                ->set_max_student($item['max_student'])
-                ->set_time_start($item['time_start'])
-                ->set_time_open($item['time_open']);
-        }
-        return $list_class;
+        return ClassObj::get_list_classes_obj($ls);
     }
 
     static function get_class_by_id($id){
@@ -90,34 +94,27 @@ class ClassModel{
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
         if (count($ls) == 1){
-            return (new ClassObj)
-                ->set_id($ls[0]['id'])
-                ->set_name($ls[0]['name'])
-                ->set_credit($ls[0]['credit'])
-                ->set_min_student($ls[0]['min_student'])
-                ->set_max_student($ls[0]['max_student'])
-                ->set_time_start($ls[0]['time_start'])
-                ->set_time_open($ls[0]['time_open']);
+            return ClassObj::get_list_classes_obj($ls)[0];
         }
-        else return null;
+        else {
+            return null;
+        }
     }
 
     static function get_list_order_by($order, $desc){
         $sql = "select * from classes order by " . $order . ($desc ? ' desc' : '');
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
-        $list_class = [];
-        foreach ($ls as $item){
-            $list_class[] = (new ClassObj)
-                ->set_id($item['id'])
-                ->set_name($item['name'])
-                ->set_credit($item['credit'])
-                ->set_min_student($item['min_student'])
-                ->set_max_student($item['max_student'])
-                ->set_time_start($item['time_start'])
-                ->set_time_open($item['time_open']);
-        }
-        return $list_class;
+        return ClassObj::get_list_classes_obj($ls);
+    }
+
+    static function get_classes_by_student_id($student_id){
+        $sql = "select * 
+                from classes A join `student-class` B on A.id = B.id_class
+                where B.id_student = " . $student_id;
+        $result = DB::query($sql);
+        $ls = DB::fetch_all_rows($result);
+        return ClassObj::get_list_classes_obj($ls);
     }
 
     static function remove_class($id){

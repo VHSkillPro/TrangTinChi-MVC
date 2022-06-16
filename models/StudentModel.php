@@ -72,6 +72,22 @@ class Student{
                 return $this->email;
         }
     }   
+
+    static function get_list_student_obj($arr){
+        $list_student = [];
+        foreach ($arr as $item){
+            $list_student[] = (new Student)
+                ->set_id($item['id'])
+                ->set_name($item['name'])
+                ->set_gender($item['gender'])
+                ->set_major($item['major'])
+                ->set_birthday($item['birthday'])
+                ->set_birthplace($item['birthplace'])
+                ->set_phone($item['phone'])
+                ->set_email($item['email']);
+        }
+        return $list_student;
+    }
 };
 
 class StudentModel{
@@ -79,38 +95,14 @@ class StudentModel{
         $sql = "select * from students";
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
-        $list_student = [];
-        foreach ($ls as $item){
-            $list_student[] = (new Student)
-                ->set_id($item['id'])
-                ->set_name($item['name'])
-                ->set_gender($item['gender'])
-                ->set_major($item['major'])
-                ->set_birthday($item['birthday'])
-                ->set_birthplace($item['birthplace'])
-                ->set_phone($item['phone'])
-                ->set_email($item['email']);
-        }
-        return $list_student;
+        return Student::get_list_student_obj($ls);
     }
 
     static function get_list_order_by($flag, $desc = false){
         $sql = "select * from students order by " . $flag . ($desc ? ' desc' : '');
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
-        $list_student = [];
-        foreach ($ls as $item){
-            $list_student[] = (new Student)
-                ->set_id($item['id'])
-                ->set_name($item['name'])
-                ->set_gender($item['gender'])
-                ->set_major($item['major'])
-                ->set_birthday($item['birthday'])
-                ->set_birthplace($item['birthplace'])
-                ->set_phone($item['phone'])
-                ->set_email($item['email']);
-        }
-        return $list_student;
+        return Student::get_list_student_obj($ls);
     }
 
     static function get_student_by_id($id){
@@ -118,15 +110,7 @@ class StudentModel{
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
         if (count($ls) == 1){
-            return (new Student)
-                ->set_id($ls[0]['id'])
-                ->set_name($ls[0]['name'])
-                ->set_gender($ls[0]['gender'])
-                ->set_major($ls[0]['major'])
-                ->set_birthday($ls[0]['birthday'])
-                ->set_birthplace($ls[0]['birthplace'])
-                ->set_phone($ls[0]['phone'])
-                ->set_email($ls[0]['email']);
+            return Student::get_list_student_obj($ls)[0];
         }
         else return null;
     }
@@ -137,23 +121,23 @@ class StudentModel{
                 where B.id_class = " . $class_id;
         $result = DB::query($sql);
         $ls = DB::fetch_all_rows($result);
-        $list_student = [];
-        foreach ($ls as $item){
-            $list_student[] = (new Student)
-                ->set_id($item['id'])
-                ->set_name($item['name'])
-                ->set_gender($item['gender'])
-                ->set_major($item['major'])
-                ->set_birthday($item['birthday'])
-                ->set_birthplace($item['birthplace'])
-                ->set_phone($item['phone'])
-                ->set_email($item['email']);
-        }
-        return $list_student;
+        return Student::get_list_student_obj($ls);
     }
 
     static function remove_student($id){
         $sql = "delete from students where id = " . $id;
+        return DB::query($sql);
+    }
+
+    static function remove_class($student_id, $class_id){
+        $sql = "delete from `student-class` 
+                where id_student = " . $student_id . " and id_class = " . $class_id;
+        return DB::query($sql);
+    }
+
+    static function add_class($student_id, $class_id){
+        $sql = 'insert into `student-class` (id_student, id_class) 
+                value (' . $student_id . ', ' . $class_id . ')';
         return DB::query($sql);
     }
 
