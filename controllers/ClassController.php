@@ -83,4 +83,17 @@ class ClassController{
             header("location: /class");
         }
     }
+
+    static function removeStudent(){
+        if (isset($_POST['btn-remove-student'])){
+            $class_id = $_POST['class-id'];
+            $student_id = $_POST['student-id'];
+
+            StudentModel::remove_class($student_id, $class_id);
+            die(header("location: /class/detail?id=" . $class_id));
+        }
+        else {
+            die(require_once './views/404.php');
+        }
+    }
 };

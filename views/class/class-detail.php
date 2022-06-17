@@ -131,8 +131,9 @@
                     <a class="btn btn-primary" href=<?= "/student/detail?id=".$student->id ?> role="button">
                         <i class="fa-solid fa-circle-info"></i>
                     </a>
-                    <form class="d-inline" action=<?= "/class/remove-student" ?> method="POST">
-                        <input type="hidden" name="class-id" value=<?= $student->id ?>>
+                    <form class="d-inline" action=<?= "/class/removeStudent" ?> method="POST">
+                        <input type="hidden" name="class-id" value=<?= $id ?>>
+                        <input type="hidden" name="student-id" value=<?= $student->id ?>>
                         <button 
                             type="submit" 
                             name="btn-remove-student" 

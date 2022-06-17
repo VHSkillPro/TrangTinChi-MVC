@@ -17,5 +17,4 @@
 #   2.5 Add -- OK
 #   2.6 Sort -- OK
 #   2.7 Search
-#   2.8 Add Student
-#   2.9 Remove Student
+#   2.9 Remove Student -- OK
