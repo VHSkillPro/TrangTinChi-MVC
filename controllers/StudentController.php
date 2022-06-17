@@ -10,6 +10,48 @@ class StudentController{
         $desc = isset($_GET['desc']) ? true : false;
 
         $list_student = StudentModel::get_list_order_by($order, $desc);
+
+        $student_id = !empty($_GET['student-id']) ? (int)$_GET['student-id'] : null;
+        $student_name = !empty($_GET['student-name']) ? $_GET['student-name'] : null;
+        $student_gender = !empty($_GET['student-gender']) ? $_GET['student-gender'] : null;
+        $student_major = !empty($_GET['student-major']) ? $_GET['student-major'] : null;
+
+        $urlSort = "";
+
+        if (!empty($student_id)){
+            $urlSort .= "&student-id=" . $student_id;
+            for ($i = count($list_student) - 1; $i >= 0; $i--){
+                if ($list_student[$i]->id === $student_id) continue;
+                array_splice($list_student, $i, 1);
+            }
+        }
+
+        if (!empty($student_name)){
+            $urlSort .= "&student-name=" . $student_name;
+            for ($i = count($list_student) - 1; $i >= 0; $i--){
+                if ($list_student[$i]->name === $student_name) continue;
+                array_splice($list_student, $i, 1);
+            }
+        }
+
+        if (!empty($student_gender)){
+            $urlSort .= "&student-gender=" . $student_gender;
+            for ($i = count($list_student) - 1; $i >= 0; $i--){
+                if ($list_student[$i]->gender === $student_gender) continue;
+                array_splice($list_student, $i, 1);
+            }
+        }
+
+        if (!empty($student_major)){
+            $urlSort .= "&student-major=" . $student_major;
+            for ($i = count($list_student) - 1; $i >= 0; $i--){
+                if ($list_student[$i]->major === $student_major) continue;
+                array_splice($list_student, $i, 1);
+            }
+        }
+
+        if (strlen($urlSort) > 0) $urlSort = substr($urlSort, 1);
+
         require_once './views/student/student-list.php';
     }
 
