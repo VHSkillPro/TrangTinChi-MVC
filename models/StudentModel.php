@@ -124,6 +124,16 @@ class StudentModel{
         return Student::get_list_student_obj($ls);
     }
 
+    static function get_student_by_class_id_order_by($class_id, $flag, $desc = false){
+        $sql = "select * 
+                from students A join `student-class` B on A.id = B.id_student
+                where B.id_class = " . $class_id . "
+                order by " . $flag . ($desc ? ' desc' : '');
+        $result = DB::query($sql);
+        $ls = DB::fetch_all_rows($result);
+        return Student::get_list_student_obj($ls);
+    }
+
     static function remove_student($id){
         $sql = "delete from students where id = " . $id;
         return DB::query($sql);

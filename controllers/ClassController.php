@@ -45,7 +45,7 @@ class ClassController{
         $order = isset($_GET['order']) ? $_GET['order'] : 'id';
         $desc = isset($_GET['desc']) ? true : false;
         
-        $list_student_in_class = StudentModel::get_student_by_class_id($id);
+        $list_student_in_class = StudentModel::get_student_by_class_id_order_by($id, $order, $desc);
 
         require_once './views/class/class-detail.php';
     }
