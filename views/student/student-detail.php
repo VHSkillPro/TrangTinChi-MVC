@@ -55,6 +55,8 @@
             </div>
         </div>
 
+        <input type="hidden" name="student-token" class="form-control" id="student-token" value="<?= $student->token ?>">
+
         <div class="d-flex justify-content-center">
             <button 
                 type="submit" 

@@ -9,6 +9,7 @@ class Student{
     private string $birthplace;
     private string $phone;
     private string $email;
+    private string $token;
 
     // SET 
     function set_id($id){
@@ -51,6 +52,11 @@ class Student{
         return $this;
     }
 
+    function set_token($token){
+        $this->token = $token;
+        return $this;
+    }
+
     // GET
     function __get($name){
         switch ($name){
@@ -70,6 +76,8 @@ class Student{
                 return $this->phone;
             case 'email':
                 return $this->email;
+            case 'token':
+                return $this->token;
         }
     }   
 
@@ -84,7 +92,8 @@ class Student{
                 ->set_birthday($item['birthday'])
                 ->set_birthplace($item['birthplace'])
                 ->set_phone($item['phone'])
-                ->set_email($item['email']);
+                ->set_email($item['email'])
+                ->set_token($item['token']);
         }
         return $list_student;
     }

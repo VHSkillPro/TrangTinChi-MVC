@@ -27,15 +27,15 @@ class StudentController{
         }
 
         if (!empty($student_name)){
-            $urlSort .= "&student-name=" . $student_name;
+            $urlSort .= "&student-name=" . mb_ereg_replace(' ', '+', $student_name);
             for ($i = count($list_student) - 1; $i >= 0; $i--){
-                if ($list_student[$i]->name === $student_name) continue;
+                if (is_prefix($list_student[$i]->name, $student_name)) continue;
                 array_splice($list_student, $i, 1);
             }
         }
 
         if (!empty($student_gender) && $student_gender !== 'null'){
-            $urlSort .= "&student-gender=" . $student_gender;
+            $urlSort .= "&student-gender=" . mb_ereg_replace(' ', '+', $student_gender);
             for ($i = count($list_student) - 1; $i >= 0; $i--){
                 if ($list_student[$i]->gender === $student_gender) continue;
                 array_splice($list_student, $i, 1);
@@ -43,9 +43,9 @@ class StudentController{
         }
 
         if (!empty($student_major)){
-            $urlSort .= "&student-major=" . $student_major;
+            $urlSort .= "&student-major=" . mb_ereg_replace(' ', '+', $student_major);
             for ($i = count($list_student) - 1; $i >= 0; $i--){
-                if ($list_student[$i]->major === $student_major) continue;
+                if (is_prefix($list_student[$i]->major, $student_major)) continue;
                 array_splice($list_student, $i, 1);
             }
         }
@@ -87,6 +87,13 @@ class StudentController{
     static function edit(){
         if (isset($_POST['btn-edit-student'])){
             $id = (int)$_POST['student-id'];
+            $cur_student = StudentModel::get_student_by_id($id);
+
+            if ($cur_student->token !== $_POST['student-token']) {
+                header("location: /home/error");
+                die();
+            }
+
             $student = (new Student)
                 ->set_name($_POST['student-name'])
                 ->set_gender($_POST['student-gender'])
@@ -113,7 +120,8 @@ class StudentController{
                 ->set_birthday($_POST['student-birthday'])
                 ->set_birthplace($_POST['student-birthplace'])
                 ->set_phone($_POST['student-phone'])
-                ->set_email($_POST['student-email']);
+                ->set_email($_POST['student-email'])
+                ->set_token(sha1(random_string()));
 
             if (!filter_var($student->email, FILTER_VALIDATE_EMAIL)){
                 setcookie("error", "Email không hợp lệ", time() + 1);

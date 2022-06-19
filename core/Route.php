@@ -2,6 +2,7 @@
 require_once './controllers/Bridge.php';
 
 App::route('home', 'index', 'GET', 'HomeController::index');
+App::route('home', 'error', 'GET', 'HomeController::error');
 
 // Student
     App::route('student', 'index', 'GET', 'StudentController::index');
@@ -20,4 +21,5 @@ App::route('home', 'index', 'GET', 'HomeController::index');
     App::route('class', 'remove', 'POST', 'ClassController::remove');
     App::route('class', 'add', 'POST', 'ClassController::add');
     App::route('class', 'removeStudent', 'POST', 'ClassController::removeStudent');
+    
     

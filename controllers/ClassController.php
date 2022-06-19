@@ -28,7 +28,7 @@ class ClassController{
         if (!empty($class_name)){
             $urlSort .= "&class-name=" . $class_name;
             for ($i = count($list_class) - 1; $i >= 0; $i--){
-                if ($list_class[$i]->name === $class_name) continue;
+                if (is_prefix($list_class[$i]->name, $class_name)) continue;
                 array_splice($list_class, $i, 1);
             }
         }
