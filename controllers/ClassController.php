@@ -11,6 +11,38 @@ class ClassController{
 
         $list_class = ClassModel::get_list_order_by($order, $desc);
 
+        $class_id = !empty($_GET['class-id']) ? (int)$_GET['class-id'] : null;
+        $class_name = !empty($_GET['class-name']) ? $_GET['class-name'] : null;
+        $class_credit = !empty($_GET['class-credit']) ? (int)$_GET['class-credit'] : null;
+
+        $urlSort = "";
+
+        if (!empty($class_id)){
+            $urlSort .= "&class-id=" . $class_id;
+            for ($i = count($list_class) - 1; $i >= 0; $i--){
+                if ($list_class[$i]->id === $class_id) continue;
+                array_splice($list_class, $i, 1);
+            }
+        }
+
+        if (!empty($class_name)){
+            $urlSort .= "&class-name=" . $class_name;
+            for ($i = count($list_class) - 1; $i >= 0; $i--){
+                if ($list_class[$i]->name === $class_name) continue;
+                array_splice($list_class, $i, 1);
+            }
+        }
+
+        if (!empty($class_credit)){
+            $urlSort .= "&class-credit=" . $class_credit;
+            for ($i = count($list_class) - 1; $i >= 0; $i--){
+                if ($list_class[$i]->credit === $class_credit) continue;
+                array_splice($list_class, $i, 1);
+            }
+        }
+
+        if (strlen($urlSort) > 0) $urlSort = substr($urlSort, 1);
+
         require_once './views/class/class-list.php';
     }
 
