@@ -34,7 +34,7 @@ class StudentController{
             }
         }
 
-        if (!empty($student_gender)){
+        if (!empty($student_gender) && $student_gender !== 'null'){
             $urlSort .= "&student-gender=" . $student_gender;
             for ($i = count($list_student) - 1; $i >= 0; $i--){
                 if ($list_student[$i]->gender === $student_gender) continue;
@@ -51,7 +51,7 @@ class StudentController{
         }
 
         if (strlen($urlSort) > 0) $urlSort = substr($urlSort, 1);
-
+        
         require_once './views/student/student-list.php';
     }
 
